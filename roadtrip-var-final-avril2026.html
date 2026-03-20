@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road Trip Van · Paimpol → Var · Avril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0F6E56; --teal-l: #E1F5EE; --teal-m: #1D9E75;
+    --blue: #185FA5; --blue-l: #E6F1FB;
+    --amber: #854F0B; --amber-l: #FAEEDA;
+    --purple: #534AB7; --purple-l: #EEEDFE;
+    --gray: #5F5E5A; --gray-l: #F4F3EF;
+    --dark: #1a1917; --white: #fff;
+    --sand: #F7F3EC;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--dark); line-height: 1.6; }
+
+  /* ── COVER ── */
+  .cover {
+    position: relative; height: 60vh; min-height: 420px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; overflow: hidden;
+    background: linear-gradient(135deg, #0a2540 0%, #0F6E56 60%, #1D9E75 100%);
+  }
+  .cover-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 2rem; }
+  .cover-eyebrow { font-size: .75rem; letter-spacing: .25em; text-transform: uppercase; color: #9FE1CB; margin-bottom: 1rem; font-weight: 500; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 600; line-height: 1.05; margin-bottom: .5rem; }
+  .cover-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 400; font-style: italic; color: #c8e4ed; margin-bottom: 2rem; }
+  .cover-date { display: inline-block; background: var(--teal-m); color: var(--white); font-size: .9rem; font-weight: 500; letter-spacing: .05em; padding: .5rem 1.5rem; border-radius: 2rem; margin-bottom: 2.5rem; }
+  .cover-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
+  .cover-pill { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); color: var(--white); font-size: .8rem; padding: .35rem 1rem; border-radius: 2rem; backdrop-filter: blur(4px); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ── ALERT ── */
+  .alert { background: #FFF3CD; border-left: 4px solid #F59E0B; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; font-size: .85rem; color: #78350F; margin: 2rem auto; }
+  .alert strong { color: #92400E; }
+
+  /* ── KM BAR ── */
+  .km-bar { background: var(--white); border-radius: 12px; border: 1px solid #E5E3DC; padding: 1.25rem 1.5rem; margin: 0 auto 2.5rem; }
+  .km-bar h3 { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-bottom: .75rem; }
+  .km-row { display: flex; justify-content: space-between; align-items: baseline; padding: .25rem 0; border-bottom: 1px solid #F0EEE8; font-size: .82rem; }
+  .km-row:last-of-type { border-bottom: none; }
+  .km-day { color: var(--teal); font-weight: 500; min-width: 110px; }
+  .km-route { color: var(--dark); flex: 1; padding: 0 1rem; }
+  .km-dist { color: var(--gray); font-size: .78rem; white-space: nowrap; }
+  .km-total { margin-top: .75rem; padding-top: .75rem; border-top: 1px solid #E5E3DC; font-size: .82rem; font-weight: 500; color: var(--teal); text-align: right; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 3rem; }
+  .section-header { display: flex; align-items: center; gap: .75rem; padding: .75rem 1.25rem; border-radius: 10px; margin-bottom: 1.25rem; font-size: .8rem; font-weight: 500; letter-spacing: .04em; }
+  .section-header.aller   { background: var(--gray-l); color: var(--gray); }
+  .section-header.var     { background: var(--teal-l); color: var(--teal); }
+  .section-header.prov    { background: var(--blue-l); color: var(--blue); }
+  .section-header.cousin  { background: var(--purple-l); color: var(--purple); }
+  .section-header.retour  { background: var(--gray-l); color: var(--gray); }
+  .section-num { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+
+  /* ── DAY CARD ── */
+  .day-card { background: var(--white); border-radius: 14px; border: 1px solid #E8E5DE; margin-bottom: .85rem; overflow: hidden; display: grid; grid-template-columns: 72px 1fr; transition: box-shadow .2s, border-color .2s; }
+  .day-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); border-color: #D0CEC7; }
+
+  .day-num-col { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem .5rem; border-right: 1px solid #F0EEE8; }
+  .day-num-col.aller  { background: var(--gray-l); }
+  .day-num-col.var    { background: var(--teal-l); }
+  .day-num-col.prov   { background: var(--blue-l); }
+  .day-num-col.cousin { background: var(--purple-l); }
+  .day-num-col.retour { background: var(--gray-l); }
+
+  .day-j { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; line-height: 1; }
+  .day-j.aller  { color: var(--gray); }
+  .day-j.var    { color: var(--teal); }
+  .day-j.prov   { color: var(--blue); }
+  .day-j.cousin { color: var(--purple); }
+  .day-j.retour { color: var(--gray); }
+
+  .day-date { font-size: .65rem; color: var(--gray); text-align: center; margin-top: .25rem; line-height: 1.4; }
+  .day-body { padding: .9rem 1.1rem .5rem; }
+  .day-title { font-size: .95rem; font-weight: 500; margin-bottom: .2rem; }
+  .day-loc { font-size: .78rem; color: var(--gray); margin-bottom: .5rem; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .6rem; }
+  .tag { font-size: .68rem; padding: .2rem .55rem; border-radius: 20px; border: 1px solid; font-weight: 500; }
+  .tag-bateau  { background: var(--blue-l); color: var(--blue); border-color: #85B7EB; }
+  .tag-plage   { background: #dbeeff; color: var(--blue); border-color: #85B7EB; }
+  .tag-village { background: var(--amber-l); color: var(--amber); border-color: #EF9F27; }
+  .tag-nature  { background: #EAF3DE; color: #3B6D11; border-color: #97C459; }
+  .tag-parc    { background: var(--teal-l); color: var(--teal); border-color: #5DCAA5; }
+  .tag-visite  { background: #FBEAF0; color: #993556; border-color: #ED93B1; }
+  .tag-trajet  { background: var(--gray-l); color: var(--gray); border-color: #B4B2A9; }
+  .tag-cousin  { background: var(--purple-l); color: var(--purple); border-color: #AFA9EC; }
+
+  .day-desc { font-size: .82rem; color: var(--gray); line-height: 1.65; margin-bottom: .6rem; }
+  .day-desc strong { color: var(--dark); font-weight: 500; }
+
+  /* ── LIEN SITE WEB ── */
+  .site-link { display: inline-flex; align-items: center; gap: .35rem; font-size: .75rem; font-weight: 500; color: var(--teal); text-decoration: none; background: var(--teal-l); border: 1px solid #5DCAA5; padding: .3rem .75rem; border-radius: 20px; margin-bottom: .6rem; margin-right: .3rem; transition: background .15s, color .15s; }
+  .site-link:hover { background: var(--teal-m); color: var(--white); border-color: var(--teal-m); }
+  .site-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  /* ── OPTIONS ── */
+  .options-block {
+    background: #FAFAF8;
+    border-top: 1px dashed #DDD9D0;
+    padding: .7rem 1.1rem .75rem;
+    margin-top: .1rem;
+  }
+  .options-label {
+    font-size: .67rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: .4rem;
+  }
+  .options-list { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .option-pill {
+    font-size: .72rem; color: var(--gray);
+    background: var(--white); border: 1px solid #DDD9D0;
+    padding: .25rem .65rem; border-radius: 20px;
+    line-height: 1.4;
+  }
+  .option-pill.highlight {
+    background: var(--amber-l); border-color: #EF9F27; color: var(--amber); font-weight: 500;
+  }
+
+  .day-night { padding: .5rem 1.1rem .7rem; font-size: .75rem; color: var(--teal-m); border-top: 1px solid #F0EEE8; }
+
+  /* ── BILAN ── */
+  .bilan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-bottom: 2rem; }
+  .bilan-card { background: var(--white); border-radius: 10px; border: 1px solid #E8E5DE; padding: .9rem 1rem; }
+  .bilan-icon { font-size: 1.4rem; margin-bottom: .3rem; }
+  .bilan-cat  { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gray); margin-bottom: .2rem; }
+  .bilan-val  { font-size: .82rem; font-weight: 500; color: var(--dark); }
+  .bilan-sub  { font-size: .73rem; color: var(--gray); margin-top: .15rem; }
+
+  /* ── TIPS ── */
+  .tips-grid { display: grid; gap: .5rem; }
+  .tip { display: grid; grid-template-columns: 90px 1fr; background: var(--white); border-radius: 8px; border: 1px solid #E8E5DE; overflow: hidden; font-size: .82rem; }
+  .tip-label { background: var(--amber-l); color: var(--amber); font-weight: 500; padding: .7rem .8rem; display: flex; align-items: center; font-size: .78rem; }
+  .tip-text  { padding: .7rem .9rem; color: var(--gray); }
+
+  footer { text-align: center; padding: 2.5rem 1rem; font-size: .78rem; color: var(--gray); border-top: 1px solid #E8E5DE; margin-top: 3rem; }
+
+  @media (max-width: 600px) {
+    .bilan-grid { grid-template-columns: repeat(2, 1fr); }
+    .km-row { flex-wrap: wrap; gap: .15rem; }
+    .km-dist { width: 100%; padding-left: 110px; }
+  }
+  @media print {
+    body { background: white; }
+    .cover { height: 40vh; page-break-after: always; }
+    .day-card { break-inside: avoid; }
+    .options-block { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-content">
+    <p class="cover-eyebrow">Carnet de voyage · Famille · Van</p>
+    <h1 class="cover-title">Road Trip<br>en Van</h1>
+    <p class="cover-subtitle">Paimpol → Var → Ardèche</p>
+    <div class="cover-date">11 – 26 Avril 2026 · 15 jours</div>
+    <div class="cover-pills">
+      <span class="cover-pill">2 adultes + enfants 4 &amp; 8 ans</span>
+      <span class="cover-pill">⛵ 2 sorties bateau</span>
+      <span class="cover-pill">🏝 Porquerolles</span>
+      <span class="cover-pill">🌊 Cascade de Sillans</span>
+      <span class="cover-pill">🌳 Forêt des 4 Mondes</span>
+      <span class="cover-pill">~2 270 km</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="alert">
+    <strong>⚠ Réservations urgentes</strong> — Vacances scolaires zone B (Bretagne) : 11–26 avril.
+    Réserver les campings, le ferry Porquerolles et les Bateliers de Cassis <strong>maintenant</strong>.
+  </div>
+
+  <!-- KM BAR -->
+  <div class="km-bar">
+    <h3>Récap kilométrique</h3>
+    <div class="km-row"><span class="km-day">J1 · Sam 11 avr.</span><span class="km-route">Paimpol → Saumur</span><span class="km-dist">~340 km · 4h</span></div>
+    <div class="km-row"><span class="km-day">J2 · Dim 12 avr.</span><span class="km-route">Saumur → Sanary (via Pont d'Arc)</span><span class="km-dist">~670 km · 7h</span></div>
+    <div class="km-row"><span class="km-day">J3–J12</span><span class="km-route">Var littoral + intérieur — séjour sur place</span><span class="km-dist">~30 km/jour max</span></div>
+    <div class="km-row"><span class="km-day">J12 · Mer 22 avr.</span><span class="km-route">Var → Saint-Fortunat-sur-Eyrieux</span><span class="km-dist">~250 km · 3h</span></div>
+    <div class="km-row"><span class="km-day">J14 · Ven 24 avr.</span><span class="km-route">Saint-Fortunat → Loire (Saumur/Amboise)</span><span class="km-dist">~400 km · 4h</span></div>
+    <div class="km-row"><span class="km-day">J15 · Sam 25 avr.</span><span class="km-route">Loire → Paimpol — arrivée midi</span><span class="km-dist">~430 km · 4h30</span></div>
+    <div class="km-total">Total aller-retour ≈ 2 270 km · Retour via Ardèche, arrivée samedi midi</div>
+  </div>
+
+  <!-- ── CARTE SVG ── -->
+  <div style="margin-bottom:2.5rem">
+    <div class="section-header var" style="margin-bottom:1rem">
+      <span class="section-num">🗺️</span> Carte du parcours
+    </div>
+    <div style="border-radius:14px;overflow:hidden;border:1px solid #E8E5DE;box-shadow:0 2px 12px rgba(0,0,0,.06);background:#EAF3F8;">
+
+      <!-- Coordonnées réelles converties en SVG (viewBox 0 0 800 900) -->
+      <!-- Projection simple : lng [-5, 8] → x [40,760] ; lat [42, 50] → y [860,60] -->
+      <svg viewBox="0 0 800 920" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:'DM Sans',sans-serif;">
+
+        <!-- Fond -->
+        <rect width="800" height="920" fill="#EAF3F8"/>
+
+        <!-- Contour simplifié de la France métropolitaine -->
+        <path d="
+          M 210 60  L 290 50  L 370 65  L 430 55  L 500 75  L 560 100
+          L 610 130 L 650 170 L 670 220 L 660 270 L 680 310 L 700 350
+          L 720 390 L 710 430 L 690 460 L 700 500 L 680 530 L 650 550
+          L 620 580 L 600 620 L 570 650 L 540 670 L 510 680 L 480 700
+          L 450 720 L 420 730 L 400 750 L 370 740 L 340 750 L 310 730
+          L 280 720 L 250 700 L 220 680 L 190 650 L 160 620 L 140 580
+          L 120 540 L 110 500 L 100 460 L 110 420 L 100 380 L 110 340
+          L 120 300 L 130 260 L 140 220 L 155 180 L 165 140 L 185 100
+          Z
+        " fill="#F0F7F0" stroke="#C8DFC8" stroke-width="1.5"/>
+
+        <!-- Mer Méditerranée (suggestion) -->
+        <path d="M 390 750 L 420 730 L 450 720 L 480 700 L 510 680 L 540 670 L 570 650 L 600 620 L 620 580 L 650 550 L 680 530 L 720 520 L 760 540 L 780 580 L 790 630 L 780 680 L 760 720 L 740 760 L 720 800 L 700 840 L 670 870 L 630 895 L 580 910 L 530 920 L 480 920 L 430 910 L 390 890 L 370 860 L 370 810 L 380 770 Z" fill="#C8E8F5" opacity="0.6"/>
+
+        <!-- Label mer -->
+        <text x="620" y="820" fill="#6BAED6" font-size="13" font-style="italic" text-anchor="middle">Mer Méditerranée</text>
+        <text x="130" y="400" fill="#6BAED6" font-size="12" font-style="italic" text-anchor="middle" transform="rotate(-30,130,400)">Océan Atlantique</text>
+
+        <!-- Quelques reliefs / régions indicatifs -->
+        <text x="260" y="300" fill="#A8C0A8" font-size="11" text-anchor="middle" font-style="italic">Loire</text>
+        <text x="490" y="480" fill="#A8C0A8" font-size="11" text-anchor="middle" font-style="italic">Massif Central</text>
+        <text x="600" y="580" fill="#A8C0A8" font-size="11" text-anchor="middle" font-style="italic">Alpes</text>
+        <text x="480" y="680" fill="#A8C0A8" font-size="11" text-anchor="middle" font-style="italic">Provence</text>
+
+        <!-- ══ TRACÉ ALLER (vert) ══ -->
+        <!-- Paimpol→Saumur→Pont d'Arc→Sanary→Cassis→Porquerolles→La Seyne→Grimaud→Ramatuelle→Fréjus→Sillans→Moustiers→Bormes -->
+        <polyline
+          points="
+            174,118
+            262,252
+            508,498
+            452,742
+            422,726
+            470,780
+            440,752
+            510,726
+            522,732
+            558,706
+            490,666
+            516,632
+            478,750
+          "
+          fill="none" stroke="#0F6E56" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="0.9"/>
+
+        <!-- ══ TRACÉ RETOUR (violet pointillé) ══ -->
+        <!-- Bormes→Saint-Fortunat→Saumur→Paimpol -->
+        <polyline
+          points="
+            478,750
+            524,490
+            262,252
+            174,118
+          "
+          fill="none" stroke="#534AB7" stroke-width="3" stroke-dasharray="9,6" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>
+
+        <!-- ══ MARQUEURS ══ -->
+
+        <!-- Macro : cercle + label  -->
+        <!-- Paimpol -->
+        <circle cx="174" cy="118" r="9" fill="#0F6E56" stroke="white" stroke-width="2.5"/>
+        <text x="188" y="113" fill="#0F6E56" font-size="12" font-weight="600">Paimpol</text>
+        <text x="188" y="127" fill="#555" font-size="10">🏠 Départ / Retour</text>
+
+        <!-- Saumur -->
+        <circle cx="262" cy="252" r="7" fill="#5F5E5A" stroke="white" stroke-width="2"/>
+        <text x="274" y="248" fill="#5F5E5A" font-size="11" font-weight="600">Saumur</text>
+        <text x="274" y="260" fill="#777" font-size="10">Nuit étape J1 · J15</text>
+
+        <!-- Vallon-Pont-d'Arc -->
+        <circle cx="508" cy="498" r="7" fill="#5F5E5A" stroke="white" stroke-width="2"/>
+        <text x="520" y="494" fill="#5F5E5A" font-size="11" font-weight="600">Vallon-Pont-d'Arc</text>
+        <text x="520" y="506" fill="#777" font-size="10">Pause J2</text>
+
+        <!-- Saint-Fortunat -->
+        <circle cx="524" cy="490" r="8" fill="#534AB7" stroke="white" stroke-width="2.5"/>
+        <text x="536" y="483" fill="#534AB7" font-size="11" font-weight="600">St-Fortunat</text>
+        <text x="536" y="495" fill="#534AB7" font-size="10">🏡 Chez le cousin J13–J14</text>
+
+        <!-- Sanary -->
+        <circle cx="452" cy="742" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="390" y="738" fill="#0F6E56" font-size="11" font-weight="600" text-anchor="end">Sanary</text>
+        <text x="390" y="750" fill="#777" font-size="10" text-anchor="end">Base Var J3</text>
+
+        <!-- Cassis -->
+        <circle cx="422" cy="726" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="410" y="718" fill="#0F6E56" font-size="11" font-weight="600" text-anchor="end">Cassis</text>
+        <text x="410" y="730" fill="#777" font-size="10" text-anchor="end">⛵ Calanques J4</text>
+
+        <!-- Porquerolles -->
+        <circle cx="470" cy="780" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="482" y="776" fill="#0F6E56" font-size="11" font-weight="600">Porquerolles</text>
+        <text x="482" y="788" fill="#777" font-size="10">🏝 Île J5</text>
+
+        <!-- La Seyne / Forêt 4 Mondes -->
+        <circle cx="440" cy="752" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="428" y="744" fill="#0F6E56" font-size="11" font-weight="600" text-anchor="end">Forêt 4 Mondes</text>
+        <text x="428" y="756" fill="#777" font-size="10" text-anchor="end">🌳 J6</text>
+
+        <!-- Grimaud / Gassin -->
+        <circle cx="510" cy="726" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="522" y="722" fill="#0F6E56" font-size="11" font-weight="600">Grimaud</text>
+        <text x="522" y="734" fill="#777" font-size="10">🏘 Villages J7</text>
+
+        <!-- Pampelonne / Cap Taillat -->
+        <circle cx="522" cy="732" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="534" y="728" fill="#0F6E56" font-size="11" font-weight="600">Pampelonne</text>
+        <text x="534" y="740" fill="#777" font-size="10">🥾 Cap Taillat J7</text>
+
+        <!-- Fréjus / Estérel -->
+        <circle cx="558" cy="706" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="570" y="702" fill="#0F6E56" font-size="11" font-weight="600">Fréjus · Estérel</text>
+        <text x="570" y="714" fill="#777" font-size="10">🦁 Zoo J9–J10</text>
+
+        <!-- Sillans-la-Cascade -->
+        <circle cx="490" cy="666" r="7" fill="#185FA5" stroke="white" stroke-width="2"/>
+        <text x="478" y="659" fill="#185FA5" font-size="11" font-weight="600" text-anchor="end">Cascade Sillans</text>
+        <text x="478" y="671" fill="#185FA5" font-size="10" text-anchor="end">🌊 J11 matin</text>
+
+        <!-- Moustiers -->
+        <circle cx="516" cy="632" r="7" fill="#185FA5" stroke="white" stroke-width="2"/>
+        <text x="528" y="628" fill="#185FA5" font-size="11" font-weight="600">Moustiers</text>
+        <text x="528" y="640" fill="#185FA5" font-size="10">🏔 J11 après-midi</text>
+
+        <!-- Bormes -->
+        <circle cx="478" cy="750" r="7" fill="#0F6E56" stroke="white" stroke-width="2"/>
+        <text x="466" y="766" fill="#0F6E56" font-size="11" font-weight="600" text-anchor="end">Bormes</text>
+        <text x="466" y="778" fill="#777" font-size="10" text-anchor="end">🌸 J12</text>
+
+        <!-- ══ LÉGENDE ══ -->
+        <rect x="20" y="820" width="220" height="90" rx="8" fill="white" opacity="0.92" stroke="#E8E5DE"/>
+        <text x="32" y="840" fill="#1a1917" font-size="12" font-weight="700">Légende</text>
+        <line x1="32" y1="852" x2="62" y2="852" stroke="#0F6E56" stroke-width="3"/>
+        <text x="70" y="856" fill="#333" font-size="11">Trajet aller</text>
+        <line x1="32" y1="870" x2="62" y2="870" stroke="#534AB7" stroke-width="3" stroke-dasharray="7,4"/>
+        <text x="70" y="874" fill="#333" font-size="11">Trajet retour</text>
+        <circle cx="38" cy="888" r="5" fill="#0F6E56" stroke="white" stroke-width="1.5"/>
+        <text x="50" y="892" fill="#333" font-size="11">Étape Var / Provence</text>
+        <circle cx="38" cy="903" r="5" fill="#534AB7" stroke="white" stroke-width="1.5"/>
+        <text x="50" y="907" fill="#333" font-size="11">Étape Ardèche</text>
+
+        <!-- Titre -->
+        <text x="400" y="35" fill="#0F6E56" font-size="15" font-weight="700" text-anchor="middle">Road Trip Van · Paimpol → Var → Ardèche · Avril 2026</text>
+
+      </svg>
+    </div>
+    <p style="font-size:.72rem;color:var(--gray);text-align:center;margin-top:.5rem;font-style:italic;">
+      Carte schématique du parcours · ~2 270 km aller-retour · Aller en vert · Retour en violet pointillé
+    </p>
+  </div>
+
+  <!-- ── ALLER ── -->
+  <div class="section">
+    <div class="section-header aller"><span class="section-num">J1–J2</span> Trajet aller · 11–12 avril</div>
+
+    <div class="day-card">
+      <div class="day-num-col aller"><span class="day-j aller">J1</span><span class="day-date">Sam<br>11 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Paimpol → Saumur</div>
+          <div class="day-loc">📍 ~340 km · 4h de route</div>
+          <div class="tags"><span class="tag tag-trajet">Trajet</span><span class="tag tag-village">Pause Loire</span></div>
+          <p class="day-desc">Départ <strong>6h30</strong> — zone B, routes chargées. Arrivée Saumur début d'après-midi. Balade sur les quais de Loire, château visible depuis la rive, glaces en terrasse.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill highlight">🦁 Zoo de Doué-la-Fontaine à 20 min</span>
+            <span class="option-pill">🏰 Château de Saumur (extérieur gratuit)</span>
+            <span class="option-pill">🚲 Balade vélo bord de Loire</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping l'Île d'Offard, Saumur — bord de Loire</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col aller"><span class="day-j aller">J2</span><span class="day-date">Dim<br>12 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Saumur → Sanary via Pont d'Arc</div>
+          <div class="day-loc">📍 ~670 km · pause Ardèche</div>
+          <div class="tags"><span class="tag tag-trajet">Grand trajet</span><span class="tag tag-nature">Gorges Ardèche</span></div>
+          <p class="day-desc">Départ <strong>7h</strong>. Pause spectaculaire à <strong>Vallon-Pont-d'Arc</strong> — l'arc naturel de pierre, gratuit, 20 min depuis le parking. Pique-nique au bord de l'Ardèche. Reprise vers Sanary, arrivée soirée.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🏙 Pause déjeuner à Lyon ou Valence</span>
+            <span class="option-pill">🌊 Baignade bord Ardèche (si chaud)</span>
+            <span class="option-pill">⏩ Trajet direct sans pause si enfants fatigués</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Les Girelles ou Mogador, Sanary — réserver !</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VAR ── -->
+  <div class="section">
+    <div class="section-header var"><span class="section-num">J3–J11</span> Cœur du séjour — Var · 13–21 avril</div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J3</span><span class="day-date">Lun<br>13 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Sanary-sur-Mer · Installation et première mer</div>
+          <div class="day-loc">📍 Sanary-sur-Mer</div>
+          <div class="tags"><span class="tag tag-plage">Première mer</span><span class="tag tag-village">Port provençal</span></div>
+          <p class="day-desc">Journée douce. Port coloré, marché provençal du matin, palmiers. Déjeuner en terrasse. <strong>Plage de la Gorguette</strong> l'après-midi — sable fin, eaux peu profondes, parfaite pour les 4 ans. Premier contact avec la Méditerranée.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🌊 Plage du Gaou (île naturelle reliée par passerelle)</span>
+            <span class="option-pill">🏘 Village de Bandol à 10 min</span>
+            <span class="option-pill">😴 Journée libre et récupération après le trajet</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Les Girelles ou Mogador, Sanary</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J4</span><span class="day-date">Mar<br>14 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Calanques de Cassis en bateau</div>
+          <div class="day-loc">📍 Cassis (~30 min de Sanary)</div>
+          <div class="tags"><span class="tag tag-bateau">⛵ Bateau</span><span class="tag tag-village">Village Cassis</span><span class="tag tag-plage">Calanques</span></div>
+          <p class="day-desc"><strong>Matin :</strong> village de Cassis, port, marché. <strong>Après-midi :</strong> tour des calanques en bateau (~1h) — falaises blanches, eaux émeraude, calanque d'En Vau et Port-Pin vues depuis la mer. Magique et sans effort pour les enfants.</p>
+          <a class="site-link" href="https://www.bateliers-cassis.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Bateliers de Cassis — réserver
+          </a>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill highlight">🥾 Randonnée calanque de Port-Miou depuis Cassis (facile, 1h)</span>
+            <span class="option-pill">🏖 Plage du Bestouan à Cassis après le bateau</span>
+            <span class="option-pill">🍷 Marché provençal de Cassis le matin</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ ~18€/adulte, gratuit -4 ans · Camping Sanary/Bandol</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J5</span><span class="day-date">Mer<br>15 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Île de Porquerolles — journée complète</div>
+          <div class="day-loc">📍 Hyères → Ferry 15 min → Porquerolles</div>
+          <div class="tags"><span class="tag tag-bateau">⛵ Ferry</span><span class="tag tag-nature">Île protégée</span><span class="tag tag-plage">Plage turquoise</span></div>
+          <p class="day-desc">La journée incontournable du voyage. Aucune voiture sur l'île — <strong>vélos pour toute la famille</strong>. Plage Notre-Dame ou plage d'Argent, eau turquoise. Pique-nique sous les pins. <strong>Option :</strong> sentier de la Pointe à l'Aiguille au départ du port (~45 min, vue panoramique). Retour ferry 17-18h.</p>
+          <a class="site-link" href="https://www.tlv-tvm.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Ferry Porquerolles (TLV-TVM) — réserver ⚠
+          </a>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill highlight">🥾 Sentier de la Pointe à l'Aiguille (45 min, aller-retour, facile)</span>
+            <span class="option-pill">🚲 Tour complet de l'île à vélo (12 km)</span>
+            <span class="option-pill">🤿 Snorkeling plage d'Argent (eau limpide)</span>
+            <span class="option-pill">🌿 Village et Fort Sainte-Agathe (gratuit)</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Hyères</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J6</span><span class="day-date">Jeu<br>16 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Forêt des 4 Mondes + Plage de Bonnegrace</div>
+          <div class="day-loc">📍 La Seyne-sur-Mer / La Londe</div>
+          <div class="tags"><span class="tag tag-parc">Parc nature unique</span><span class="tag tag-plage">Plage calme</span></div>
+          <p class="day-desc"><strong>Matin :</strong> Forêt des 4 Mondes — filets géants suspendus, trampolines, fourmilière géante, dès 2 ans, sans harnais, ouvert en avril. Unique en France. <strong>Après-midi :</strong> plage de Bonnegrace, eaux peu profondes, idéale pour les petits.</p>
+          <a class="site-link" href="https://www.foret4mondes.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Forêt des 4 Mondes — site officiel
+          </a>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🏖 Plage de l'Estragnol à la place de Bonnegrace (plus sauvage, massif des Maures)</span>
+            <span class="option-pill">🏰 Village du Castellet perché (15 min, vignes)</span>
+            <span class="option-pill">🌊 Plage des Sablettes à La Seyne (grande, familiale)</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping La Londe-les-Maures</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J7</span><span class="day-date">Ven<br>17 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Grimaud + Gassin + Cap Taillat + Pampelonne</div>
+          <div class="day-loc">📍 Grimaud → Gassin → Escalet → Ramatuelle</div>
+          <div class="tags"><span class="tag tag-village">Villages perchés</span><span class="tag tag-nature">Cap sauvage</span><span class="tag tag-plage">Grande plage</span></div>
+          <p class="day-desc"><strong>Matin :</strong> Grimaud — château médiéval en ruines, gratuit, vue sur le golfe. Puis Gassin, classé Plus Beaux Villages de France, 10 min plus loin. <strong>Début d'après-midi :</strong> Cap Taillat depuis la plage de l'Escalet — sentier côtier 2,5 km plat, criques sauvages, bout du monde. <strong>Fin d'après-midi :</strong> plage de Pampelonne, châteaux de sable, baignade.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🧀 Marché de Cogolin le vendredi matin (avant Grimaud)</span>
+            <span class="option-pill">🥾 Cap Lardier à la place du Cap Taillat (plus court, 1h AR)</span>
+            <span class="option-pill">😴 Supprimer le cap et rester en plage l'après-midi</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Ramatuelle</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J8</span><span class="day-date">Sam<br>18 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Zoo de Fréjus — journée complète</div>
+          <div class="day-loc">📍 Fréjus</div>
+          <div class="tags"><span class="tag tag-parc">Zoo</span><span class="tag tag-visite">Spectacles</span></div>
+          <p class="day-desc">Journée entière au <strong>Parc Zoologique de Fréjus</strong> — 110 espèces sur 14 hectares, spectacles d'otaries, girafes, lions, reptiles. Prévoir le pique-nique sur place. Arrivée 10h dès l'ouverture.</p>
+          <a class="site-link" href="https://www.zoo-frejus.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Zoo de Fréjus — tarifs & horaires
+          </a>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🌊 Criques Estérel l'après-midi après le zoo</span>
+            <span class="option-pill">🏛 Arènes romaines de Fréjus (à côté, gratuit)</span>
+            <span class="option-pill">🏖 Plage de Fréjus en fin de journée</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Agay / Les Adrets-de-l'Estérel</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J9</span><span class="day-date">Dim<br>19 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Massif de l'Estérel + Criques sauvages</div>
+          <div class="day-loc">📍 Agay / Cap du Dramont</div>
+          <div class="tags"><span class="tag tag-nature">Roches rouges</span><span class="tag tag-plage">Criques turquoise</span></div>
+          <p class="day-desc">Journée nature dans le massif de l'Estérel — roches volcaniques rouge sang plongeant dans la mer turquoise. <strong>Matin :</strong> calanque du Dramont (30 min à pied, accessible). <strong>Après-midi :</strong> criques d'Agay à pied depuis la plage principale.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill highlight">🎯 Sentier du Sémaphore depuis Agay (vue 360°, 1h30 AR)</span>
+            <span class="option-pill">🚲 Piste VTT Estérel (location à Agay)</span>
+            <span class="option-pill">🏖 Plage d'Agay toute la journée si besoin de repos</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Agay / Les Adrets-de-l'Estérel</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col prov"><span class="day-j prov">J10</span><span class="day-date">Lun<br>20 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Cascade de Sillans + Moustiers-Sainte-Marie</div>
+          <div class="day-loc">📍 Sillans-la-Cascade → Moustiers</div>
+          <div class="tags"><span class="tag tag-nature">Cascade 42m</span><span class="tag tag-village">Village étoilé</span></div>
+          <p class="day-desc"><strong>Matin :</strong> <strong>Cascade de Sillans</strong> — 42 mètres de chute dans un bassin émeraude, 15 min de marche sur sentier ombragé facile. Avril = débit maximal et presque pas de monde. <strong>Après-midi :</strong> <strong>Moustiers-Sainte-Marie</strong>, cascades, chapelle perchée, ruelles provençales.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill highlight">🚣 Pédalo sur le Lac de Sainte-Croix après Moustiers</span>
+            <span class="option-pill">🏘 Village de Cotignac et ses grottes troglodytes (30 min de Sillans)</span>
+            <span class="option-pill">🌊 Baignade rivière Bresque en aval de la cascade</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Brignoles / Cotignac</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col var"><span class="day-j var">J11</span><span class="day-date">Mar<br>21 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Jardin de Rayol + Bormes-les-Mimosas</div>
+          <div class="day-loc">📍 Rayol-Canadel → Bormes</div>
+          <div class="tags"><span class="tag tag-visite">Jardin botanique</span><span class="tag tag-village">Plus beau village</span></div>
+          <p class="day-desc"><strong>Matin :</strong> Domaine du Rayol — 7 jardins du monde méditerranéen, panorama mer époustouflant, ouvert en avril. <strong>Après-midi :</strong> Bormes-les-Mimosas, ruelles fleuries, classé Plus Beaux Villages de France. Dernière soirée dans le Var.</p>
+          <a class="site-link" href="https://www.domainedurayol.org" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Domaine du Rayol — site officiel
+          </a>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🏖 Plage de l'Estragnol (massif des Maures, accès à pied, très sauvage)</span>
+            <span class="option-pill">🌊 Plage de Canadel, calme et familiale</span>
+            <span class="option-pill">🏰 Village de La Garde-Freinet (20 min, ruines château)</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping Bormes / La Londe — dernière nuit dans le Var !</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COUSIN ── -->
+  <div class="section">
+    <div class="section-header cousin"><span class="section-num">J12–J13 · Chez le cousin · Saint-Fortunat-sur-Eyrieux · 22–23 avril</div>
+
+    <div class="day-card">
+      <div class="day-num-col cousin"><span class="day-j cousin">J12</span><span class="day-date">Mer<br>22 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Var → Saint-Fortunat · Dolce Via</div>
+          <div class="day-loc">📍 ~250 km · 3h</div>
+          <div class="tags"><span class="tag tag-trajet">Remontée</span><span class="tag tag-cousin">Chez le cousin</span><span class="tag tag-nature">Dolce Via</span></div>
+          <p class="day-desc">Arrivée début d'après-midi. Promenade sur la <strong>Dolce Via</strong>, voie verte longeant l'Eyrieux. Aire de jeux en bord de voie. Repas en famille, soirée conviviale.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🚲 Location vélos pour la Dolce Via</span>
+            <span class="option-pill">🌊 Baignade dans l'Eyrieux si temps chaud</span>
+          </div>
+        </div>
+        <div class="day-night">🏡 Nuit chez le cousin à Saint-Fortunat-sur-Eyrieux</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col cousin"><span class="day-j cousin">J13</span><span class="day-date">Jeu<br>23 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Vallée de l'Eyrieux + Chalencon</div>
+          <div class="day-loc">📍 Saint-Fortunat / Chalencon (15 km)</div>
+          <div class="tags"><span class="tag tag-cousin">Chez le cousin</span><span class="tag tag-nature">Sentiers vallée</span><span class="tag tag-village">Village médiéval</span></div>
+          <p class="day-desc"><strong>Matin :</strong> sentiers des terrasses sur la Dolce Via, accessibles avec les enfants. <strong>Après-midi :</strong> Chalencon, village médiéval en granit, château en ruines, panorama exceptionnel sur la vallée.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🏘 Saint-Agrève ou Lamastre (villages typiques ardéchois)</span>
+            <span class="option-pill">🌲 Forêt de châtaigniers autour de Saint-Fortunat</span>
+            <span class="option-pill">🎣 Pêche dans l'Eyrieux avec le cousin</span>
+          </div>
+        </div>
+        <div class="day-night">🏡 Nuit chez le cousin — dernière nuit avant la remontée</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col cousin"><span class="day-j cousin">J14</span><span class="day-date">Ven<br>24 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Saint-Fortunat → Loire · Nuit étape</div>
+          <div class="day-loc">📍 ~400 km · 4h — départ 10h</div>
+          <div class="tags"><span class="tag tag-trajet">Remontée tranquille</span><span class="tag tag-village">Bord de Loire</span></div>
+          <p class="day-desc">Dernier petit-déjeuner chez le cousin. Départ vers 10h. Arrivée secteur Saumur ou Amboise. Balade en bord de Loire, dîner au van. Dernière nuit avant Paimpol.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🏰 Château de Chenonceau en passant (si Amboise)</span>
+            <span class="option-pill">🚲 Balade vélo bord de Loire à Amboise</span>
+            <span class="option-pill">🦁 Zoo de Doué-la-Fontaine si non fait à l'aller</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping bord de Loire — Saumur ou Amboise</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RETOUR ── -->
+  <div class="section">
+    <div class="section-header retour"><span class="section-num">J14–J15</span> Retour Paimpol · 24–25 avril</div>
+
+    <div class="day-card">
+      <div class="day-num-col retour"><span class="day-j retour">J14</span><span class="day-date">Ven<br>24 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Saint-Fortunat → Loire · Nuit étape</div>
+          <div class="day-loc">📍 ~400 km · 4h — départ 10h</div>
+          <div class="tags"><span class="tag tag-trajet">Remontée tranquille</span><span class="tag tag-village">Bord de Loire</span></div>
+          <p class="day-desc">Dernier petit-déjeuner chez le cousin. Départ vers 10h sans stress. Arrivée secteur Saumur ou Amboise en fin d'après-midi. Balade en bord de Loire, dîner au van. Dernière nuit avant Paimpol.</p>
+        </div>
+        <div class="options-block">
+          <div class="options-label">🔀 Options selon vos envies</div>
+          <div class="options-list">
+            <span class="option-pill">🏰 Château de Chenonceau en passant (si Amboise)</span>
+            <span class="option-pill">🚲 Balade vélo bord de Loire à Amboise</span>
+            <span class="option-pill">🦁 Zoo de Doué-la-Fontaine si non fait à l'aller</span>
+          </div>
+        </div>
+        <div class="day-night">⛺ Camping bord de Loire — Saumur ou Amboise</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-num-col retour"><span class="day-j retour">J15</span><span class="day-date">Sam<br>25 avr.</span></div>
+      <div>
+        <div class="day-body">
+          <div class="day-title">Loire → Paimpol · Arrivée midi !</div>
+          <div class="day-loc">📍 ~430 km · 4h30 — départ 7h30</div>
+          <div class="tags"><span class="tag tag-trajet">Retour final</span></div>
+          <p class="day-desc">Départ <strong>7h30</strong>. Samedi matin — peu de bouchons. Arrivée Paimpol vers <strong>midi</strong>. Crêpes bretonnes, rendu du van en début d'après-midi. Voyage terminé — un jour plus tôt que prévu ! 🎉</p>
+        </div>
+        <div class="day-night">🎉 Arrivée Paimpol samedi 25 avril vers midi !</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ── BILAN ── -->
+  <div style="margin-bottom:2rem">
+    <div class="section-header var" style="margin-bottom:1rem"><span class="section-num">📋</span> Bilan du séjour</div>
+    <div class="bilan-grid">
+      <div class="bilan-card"><div class="bilan-icon">⛵</div><div class="bilan-cat">Bateau</div><div class="bilan-val">2 sorties</div><div class="bilan-sub">Calanques Cassis (J4) · Ferry Porquerolles (J5)</div></div>
+      <div class="bilan-card"><div class="bilan-icon">🏖</div><div class="bilan-cat">Plage</div><div class="bilan-val">3 journées mer</div><div class="bilan-sub">Gorguette (J3) · Bonnegrace (J6) · Pampelonne (J8)</div></div>
+      <div class="bilan-card"><div class="bilan-icon">🏝</div><div class="bilan-cat">Île</div><div class="bilan-val">Porquerolles</div><div class="bilan-sub">Vélos · plage turquoise · sentier Pointe Aiguille</div></div>
+      <div class="bilan-card"><div class="bilan-icon">🌳</div><div class="bilan-cat">Parc / nature</div><div class="bilan-val">4 sites</div><div class="bilan-sub">Forêt 4 Mondes · Zoo Fréjus · Estérel · Cascade Sillans</div></div>
+      <div class="bilan-card"><div class="bilan-icon">🏘</div><div class="bilan-cat">Villages</div><div class="bilan-val">7 villages</div><div class="bilan-sub">Cassis · Grimaud · Gassin · Bormes · Moustiers · Sillans · Chalencon</div></div>
+      <div class="bilan-card"><div class="bilan-icon">🥾</div><div class="bilan-cat">Randos faciles</div><div class="bilan-val">3 sentiers</div><div class="bilan-sub">Cap Taillat · Dramont Estérel · Dolce Via Eyrieux</div></div>
+    </div>
+  </div>
+
+  <!-- ── TIPS ── -->
+  <div style="margin-bottom:2.5rem">
+    <div class="section-header" style="background:var(--amber-l);color:var(--amber);margin-bottom:1rem"><span class="section-num">💡</span> Conseils pratiques</div>
+    <div class="tips-grid">
+      <div class="tip"><div class="tip-label">Réservations</div><div class="tip-text">Ferry Porquerolles + Bateliers de Cassis + campings à réserver <strong>maintenant</strong>. Vacances zone B sur toute la durée.</div></div>
+      <div class="tip"><div class="tip-label">Températures</div><div class="tip-text">13–17°C la nuit côte varoise. Moustiers 10–12°C. Couverture 3 saisons indispensable dans le van.</div></div>
+      <div class="tip"><div class="tip-label">J2 long</div><div class="tip-text">670 km avec enfants — départ 7h pile, pause Pont d'Arc vers 12h30, arrivée Sanary 19h. Audiobooks et jeux pour la route.</div></div>
+      <div class="tip"><div class="tip-label">Sillans J10</div><div class="tip-text">Avril = meilleure période : débit max et quasi personne. Parking payant d'avril à septembre. Baignade interdite dans le bassin principal, possible en aval.</div></div>
+      <div class="tip"><div class="tip-label">Cap Taillat J7</div><div class="tip-text">Départ plage de l'Escalet (parking payant en saison, gratuit en avril). Sentier 2,5 km plat. Prévoir chaussures fermées et eau.</div></div>
+      <div class="tip"><div class="tip-label">Plan B pluie</div><div class="tip-text">Fun City Fréjus (parc intérieur) · Aquarium de Toulon · Village des Tortues Carnoules · Musée de la Légion étrangère Aubagne.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Bon voyage ! 🚐 &nbsp;·&nbsp; Paimpol → Var → Ardèche · Avril 2026 &nbsp;·&nbsp; Planning généré avec Claude (Anthropic)
+  <br><small style="display:block;margin-top:.4rem;color:#aaa">Pour imprimer en PDF : Fichier → Imprimer → Enregistrer en PDF · Les options de remplacement n'apparaissent pas à l'impression</small>
+</footer>
+
+</body>
+</html>
